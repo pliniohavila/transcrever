@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Transcrição de Áudio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Transcrição de Áudio</h1>
+    
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="audioInput" accept=".ogg,.wav,.mp3" required>
+        <button id="transcrever" type="submit">Transcrever</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const audioInput = document.getElementById('audioInput')
+            const resultadoDiv = document.getElementById('resultado')
+            const btnTranscrever = document.getElementById('transcrever')
+            
+            if (!audioInput.files.length) {
+                alert('Por favor, selecione um arquivo de áudio');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('audio', audioInput.files[0]);
+            btnTranscrever.innerText = 'Aguarde a transcrição finalizar'
+            btnTranscrever.disabled = true
+            
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.transcricao) {
+                    resultadoDiv.innerHTML = `
+                        <h3>Transcrição:</h3>
+                        <p>${data.transcricao}</p>
+                    `;
+                btnTranscrever.innerText = 'Transcrever'
+                btnTranscrever.disabled = false
+                } else if (data.error) {
+                    resultadoDiv.innerHTML = `
+                        <h3>Erro:</h3>
+                        <p>${data.error}</p>
+                    `;
+                    btnTranscrever.innerText = 'Transcrever'
+                    btnTranscrever.disabled = false
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                resultadoDiv.innerHTML = `
+                    <h3>Erro:</h3>
+                    <p>Ocorreu um erro durante a transcrição</p>
+                `;
+                btnTranscrever.innerText = 'Transcrever'
+                btnTranscrever.disabled = false
+            });
+        });
+    </script>
+</body>
+</html>
