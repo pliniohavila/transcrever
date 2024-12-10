@@ -1,8 +1,11 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
 import speech_recognition as sr
 from pydub import AudioSegment
 import uuid
+
+load_dotenv()
 
 app = Flask(__name__, template_folder='.')
 
@@ -126,6 +129,6 @@ def upload_audio():
 
 
 if __name__ == '__main__':
-    port = os.environ.get('PORT')
+    port = os.getenv('PORT')
     app.debug = True
     app.run(host='0.0.0.0', port=port, debug=True)
