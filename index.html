@@ -5,17 +5,117 @@
     <title>Transcrição de Áudio</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+
+        #uploadForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
             text-align: center;
         }
-        #resultado {
-            margin-top: 20px;
+
+        #audioInput {
+            margin-bottom: 15px;
             padding: 10px;
-            border: 1px solid #ccc;
-            min-height: 100px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+        }
+
+        #transcrever {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #transcrever:hover {
+            background-color: #2c3e50;
+        }
+
+        #transcrever:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        #resultado {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        #resultado h3 {
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 10px;
+        }
+
+        footer a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal Styles */
+        #imageModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        #modalContent {
+            margin: 10% auto;
+            max-width: 700px;
+            width: 90%;
+        }
+
+        #modalContent img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        #closeModal {
+            color: white;
+            float: right;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -28,6 +128,7 @@
     </form>
 
     <div id="resultado"></div>
+
     <footer>Feito com ❤ por <a href="http://github.com/pliniohavila">Plínio Hávila</a></footer>
 
     <script>
